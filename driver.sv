@@ -16,6 +16,10 @@ class driver extends uvm_driver #(switch_packet);
 
      function void build();
          uvm_report_info(get_full_name(),"Build", UVM_LOW);
+         //jie
+	 if (!uvm_config_db#(virtual switch_ifc)::get(this, "", "vif", switch_vif)) begin
+            `uvm_fatal("SWITCH/AGT/NOVIF", "No virtual interface specified for this driver")
+         end
      endfunction
 
      function void connect();
@@ -34,7 +38,7 @@ class driver extends uvm_driver #(switch_packet);
          uvm_report_info(get_full_name(),"Run", UVM_LOW);
          super.run_phase(phase);
 
-         this.switch_vif.core_rst <= '0;
+         //this.switch_vif.core_rst <= '0;
          this.switch_vif.din1p    <= '0;
          this.switch_vif.din2p    <= '0;
          this.switch_vif.din3p    <= '0;
@@ -68,7 +72,7 @@ class driver extends uvm_driver #(switch_packet);
      virtual protected task write(switch_packet tr);
             if(this.switch_vif.core_rst == 0)
                begin
-                 this.switch_vif.core_rst <= '0;
+                 //this.switch_vif.core_rst <= '0;
                  this.switch_vif.din1p    <= tr.din1p;
                  this.switch_vif.din2p    <= tr.din2p;
                  this.switch_vif.din3p    <= tr.din3p;
@@ -93,7 +97,7 @@ class driver extends uvm_driver #(switch_packet);
 							   repeat(8)@(posedge this.switch_vif.core_clock)
 								  begin
 								    this.switch_vif.din1p = $random();
-								    this.switch_vif.core_rst = 0;
+								    //this.switch_vif.core_rst = 0;
 								    this.switch_vif.req1p = 1;
 								  end
                end
