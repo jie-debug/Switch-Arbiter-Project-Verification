@@ -26,6 +26,9 @@ class agent extends uvm_agent;
          if (!uvm_config_db#(virtual switch_ifc)::get(this, "", "vif", switch_vif)) begin
             `uvm_fatal("SWITCH/AGT/NOVIF", "No virtual interface specified for this agent instance")
          end
+               //jie
+	 uvm_config_db#(virtual switch_ifc)::set(null, "*", "vif", switch_vif);
+
          mon = monitor::type_id::create("mon",this);   
          drv = driver::type_id::create("drv",this); 
          seqr = sequencer::type_id::create("seqr",this); 
